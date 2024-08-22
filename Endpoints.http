@@ -1,0 +1,3 @@
+### Retrieve all api
+
+GET http://localhost:5565/totalBill/price_plan/Retrieve_price_plans
