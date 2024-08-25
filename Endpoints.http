@@ -1,3 +1,16 @@
-### Retrieve all api
-
+### Retrieve all price plans
 GET http://localhost:5565/totalBill/price_plan/Retrieve_price_plans
+
+
+### Retrieve one price plans
+GET http://localhost:5565/totalBill/price_plan/Retrieve/one/price_plan/2
+
+
+### Add a price plan
+POST http://localhost:5565/totalBill/price_plan/Add_price_plan
+Content-Type: application/json
+
+### Update a price plan
+PUT http://localhost:5565/totalBill/price_plan/Update_plan/1
+Content-Type: application/json
+
