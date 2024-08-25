@@ -112,14 +112,14 @@ router.post('/Add_price_plan', async (req, res) => {
 
 
 // UPDATE PRICE PLAN ATTEMPT 1
-router.put('/Update_plan/:id', async (req, res) => {
-    const { id } = req.params;
-    const { plan_name, sms_price, call_price, data_price } = req.body;
+router.put('/Update_plan/:plan_name', async (req, res) => {
+    const { plan_name } = req.params;
+    const { new_plan_name, sms_price, call_price, data_price } = req.body;
     try {
         const db = await dbPromise;
         const result = await db.run(
-            'UPDATE price_plan SET plan_name = ?, sms_price = ?, call_price = ?, data_price = ? WHERE id = ?',
-            [plan_name, sms_price, call_price, data_price, id]
+            'UPDATE price_plan SET plan_name = ?, sms_price = ?, call_price = ?, data_price = ? WHERE plan_name = ?',
+            [new_plan_name, sms_price, call_price, data_price, plan_name]
         );
         if (result.changes > 0) {
             res.json({ message: 'Plan updated successfully' });

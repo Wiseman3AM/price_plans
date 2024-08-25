@@ -1,16 +1,51 @@
 ### Retrieve all price plans
-GET http://localhost:5565/totalBill/price_plan/Retrieve_price_plans
-
-
-### Retrieve one price plans
-GET http://localhost:5565/totalBill/price_plan/Retrieve/one/price_plan/2
+GET http://localhost:5565/totalBill/price_plan/Retrieve/all/price_plans
 
 
 ### Add a price plan
 POST http://localhost:5565/totalBill/price_plan/Add_price_plan
 Content-Type: application/json
 
+     {
+        "plan_name": "Price plan 7",
+        "sms_price": 1.98,
+        "call_price": 2.98,
+        "data_price": 3.98
+    }
+
+
+### Retrieve one price plans
+GET http://localhost:5565/totalBill/price_plan/Retrieve/one/price_plan/Price plan 7
+
+
 ### Update a price plan
-PUT http://localhost:5565/totalBill/price_plan/Update_plan/1
+PUT http://localhost:5565/totalBill/price_plan/Update_plan/Price plan 7
 Content-Type: application/json
 
+     {
+        "new_plan_name": "Price plan 7",
+        "sms_price": 3.99,
+        "call_price": 4.99,
+        "data_price": 5.99
+    }
+
+### Delete a price plan
+DELETE http://localhost:5565/totalBill/price_plan/Delete_plan/Price plan 7
+
+
+### Calculate total cost for a price plan
+POST  http://localhost:5565/totalBill/price_plan/Calculate_Total_price/Price plan 2
+Content-Type: application/json
+
+{
+  "usage": "call,sms,data"
+}
+
+### Calculate remaining airtime using a price plan
+POST http://localhost:5565/totalBill/price_plan/Calculate_enough_price/Price plan 2
+Content-Type: application/json
+
+{
+  "usage": "call,sms,data",
+  "airtime": 10
+}
