@@ -1,15 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Price plans with SQLite</title>
-    <script src="style.css"></script>
+    <title>Price plans using SQLite</title>
+
+
+    <script defer src="https://unpkg.com/alpinejs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <link rel="stylesheet" href="./style.css">
     <script src="./alpineData.js"></script>
+
 </head>
+
 <body>
 
+
+
+
     <h1>Price plans using SQLite</h1>
-    
+
+
+    <div class="allPlans">
+        <h2 class="subHeadings">Codex price plans</h2>
+        <table class="pricePlanTable">
+           
+            <tr class="tableRow">
+                <th class="tableHeader">ID</th>
+                <th class="tableHeader">Plan name</th>
+                <th class="tableHeader">SMS cost</th>
+                <th class="tableHeader">Call cost</th>
+                <th class="tableHeader">Data cost</th>
+                <th></th>
+            </tr>
+
+            <tr class="tableRow">
+                <td class="tableData"></td>
+                <td class="tableData"></td>
+                <td class="tableData"></td>
+                <td class="tableData"></td>
+                <td class="tableData"></td>
+                <td class="tableData">
+                    <button class="" @click="" x-on:click>
+                        <ion-icon style="font-size: 15px; font-weight: bolder;" name="create-outline"></ion-icon>
+                    </button>
+
+
+
+                    <button @click="" x-on:click="removeCar()"><ion-icon style="font-size: 15px; font-weight: bolder;"
+                            name="trash-outline"></ion-icon></button>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="6"> <button class="addIcon"> <ion-icon name="add-circle-outline" @click="add = true"></ion-icon> </button></td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="onePlan">
+        <h2 class="subHeadings">Retrieve a price plan </h2>
+
+        <label for="searchPlanInput">Please enter plan name here:</label>
+        <input class="searchInputs" id="searchPlanInput" type="text">
+        <button class="searchButton" @click="">Search</button>
+
+        <div class="searchedPlan">
+
+        </div>
+
+    </div>
+
+    <div class="">
+
+    </div>
+
 </body>
+
 </html>

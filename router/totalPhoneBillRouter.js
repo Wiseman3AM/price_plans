@@ -164,7 +164,7 @@ router.post('/Calculate_Total_price/:plan_name', async (req, res) => {
             const smsPrice = plan.sms_price;
             const callPrice = plan.call_price;
             const dataPrice = plan.data_price;
-            const usage = req.body.usage;  // Ensure this is the correct key from your request body
+            const usage = req.body.usage;  
 
 
             if (isNaN(smsPrice) || isNaN(callPrice) || isNaN(dataPrice)) {
