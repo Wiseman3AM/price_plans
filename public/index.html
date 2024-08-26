@@ -15,14 +15,12 @@
 
 </head>
 
-<body x-data="functions" x-cloak>
+<body x-data="functions" x-cloak x-init="loadPricePlans()">
 
 
 
 
     <h1>Phone bill calculator using SQLite</h1>
-
-    <button @click="loadPricePlans()">Load plans</button>
 
     <div class="allPlans">
         <h2 class="subHeadings">Codex price plans</h2>
@@ -65,9 +63,9 @@
                     <td colspan="6"> <button class="addIcon"><ion-icon name="add-circle-outline"
                                 @click="addPlan()"></ion-icon> </button></td>
                 </tr>
-                <tr style="text-align: center;">
-                    <td colspan="6"> 
-                        <button @click="loadSearchedPlan()">
+                <tr x-show="!searchPopUp || !searched" style="text-align: center;">
+                    <td colspan="6">
+                        <button @click="searchPopUp = true">
                             <ion-icon name="search-circle-outline"></ion-icon>
                         </button>
 
@@ -75,46 +73,83 @@
 
                 </tr>
 
+
+                <tr x-show="searched" style="text-align: center;">
+                    <td colspan="6" style="background-color: rgb(23, 23, 23); color: aliceblue;">SELECTED PLAN</td>
+                </tr>
+                <tr x-show="searched">
+                    <td class="tableData" x-text="selectedPriceData.plan_name"></td>
+                    <td class="tableData" x-text="selectedPriceData.sms_price"></td>
+                    <td class="tableData" x-text="selectedPriceData.call_price"></td>
+                    <td class="tableData" x-text="selectedPriceData.data_price"></td>
+                    <td class="tableData">  <button @click="searchPopUp = true">
+                        <ion-icon name="search-circle-outline"></ion-icon>
+                    </button> </td>
+                </tr>
+
             </tbody>
         </table>
 
     </div>
 
-    <div class="onePlan">
-        <h2 class="subHeadings">Retrieve a price plan </h2>
-
-        <label for="searchPlanInput">Please enter plan name here:</label>
-        <input class="searchInputs" id="searchPlanInput" type="text">
-        <button class="searchButton" @click="">Search</button>
-
-        <div class="searchedPlan">
-
-        </div>
-
-    </div>
 
     <div class="phoneBill">
         <h2>Calculate costs</h2>
 
         <div>
             <label for="planName">Enter price plan name here:</label>
-            <input class="phoneBillInputs" id="planName" type="text">
+            <input class="phoneBillInputs" id="planName" x-model="selectedPlanName" type="text" :disabled="calculated">
         </div>
 
         <div>
             <label for="usage">Enter usage here</label>
-            <input id="usage" class="phoneBillInputs" type="text">
+            <input id="usage" class="phoneBillInputs" x-model="usage" type="text" :disabled="calculated">
         </div>
 
         <div>
             <label for="airtime">Enter airtime here</label>
-            <input class="phoneBillInputs" type="number" id="airtime">
+            <input class="phoneBillInputs" type="number" x-model="airtime" id="airtime" :disabled="calculated">
         </div>
 
-        <Button @click="calculateAirtime() && calculateTotalBill() ">Calculate</Button>
+        <Button @click="calculateAirtime(); calculateTotalBill(); calculated = true " :disabled="calculated">Calculate</Button>
 
+        <div x-show="calculated" x-text="'Total cost: ' + totalBill.totalBill">
+
+        </div>
+
+        <div x-show="calculated" x-text="'Remaining airtime: ' + remainingAirtime.totalBill">
+
+        </div>
+
+        <Button x-show="calculated" @click="calculated = false ">Calculate again</Button>
 
     </div>
+
+
+
+    <div class="searchPopUp" x-show="searchPopUp">
+        <h2 class="subHeadings">Search for a price plan </h2>
+
+        <div style="text-align: center;">
+            <input class="searchInputs" id="searchPlanInput" type="text" x-model="selectedPlanName"
+                placeholder="Enter plan name here">
+        </div>
+
+        <div style="text-align: center;">
+            <button class="searchButton" @click="loadSearchedPlan(); searchPopUp = false; searched = true">Search</button>
+        </div>
+
+        <button class="searchButton" @click="searchPopUp = false">Cancel</button>
+
+    </div>
+
+
+
+    <div class="popUp">
+        <label for="searchInput"></label>
+
+    </div>
+
 
 </body>
 

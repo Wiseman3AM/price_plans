@@ -4,15 +4,18 @@ document.addEventListener('alpine:init', () => {
 
             priceData: [],
             selectedPriceData: [],
-            selectedPlanName: 'Price plan 2',
+            selectedPlanName: '',
             AddedPlan: [],
             planName: '',
             smsPrice:'',
             dataPrice: '',
-            usage: 'call,sms,data',
-            airtime: 10,
+            usage: '',
+            airtime: '',
             totalBill: '',
             remainingAirtime: '',
+            searched: false,
+            searchPopUp: false,
+            calculated: false,
 
 
 
@@ -70,6 +73,7 @@ document.addEventListener('alpine:init', () => {
                 async loadSearchedPlan(){
                     this.selectedPriceData = await this.fetchOnePricePlan();
                     console.log('Selected plan', this.selectedPriceData)
+                    this.loadPricePlans();
                 },
 
 
