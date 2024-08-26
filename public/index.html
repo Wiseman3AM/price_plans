@@ -15,48 +15,67 @@
 
 </head>
 
-<body>
+<body x-data="functions" x-cloak>
 
 
 
 
-    <h1>Price plans using SQLite</h1>
+    <h1>Phone bill calculator using SQLite</h1>
 
+    <button @click="loadPricePlans()">Load plans</button>
 
     <div class="allPlans">
         <h2 class="subHeadings">Codex price plans</h2>
         <table class="pricePlanTable">
-           
-            <tr class="tableRow">
-                <th class="tableHeader">ID</th>
-                <th class="tableHeader">Plan name</th>
-                <th class="tableHeader">SMS cost</th>
-                <th class="tableHeader">Call cost</th>
-                <th class="tableHeader">Data cost</th>
-                <th></th>
-            </tr>
 
-            <tr class="tableRow">
-                <td class="tableData"></td>
-                <td class="tableData"></td>
-                <td class="tableData"></td>
-                <td class="tableData"></td>
-                <td class="tableData"></td>
-                <td class="tableData">
-                    <button class="" @click="" x-on:click>
-                        <ion-icon style="font-size: 15px; font-weight: bolder;" name="create-outline"></ion-icon>
-                    </button>
+            <thead>
+                <tr class="tableRow">
+                    <th class="tableHeader">Plan name</th>
+                    <th class="tableHeader">SMS cost</th>
+                    <th class="tableHeader">Call cost</th>
+                    <th class="tableHeader">Data cost</th>
+                    <th>Edit/Delete</th>
+                </tr>
+            </thead>
 
 
+            <tbody>
+                <template x-for="plan in   priceData" :key="plan.id">
 
-                    <button @click="" x-on:click="removeCar()"><ion-icon style="font-size: 15px; font-weight: bolder;"
-                            name="trash-outline"></ion-icon></button>
-                </td>
-            </tr>
+                    <tr class="tableRow">
+                        <td class="tableData" x-text="plan.plan_name"></td>
+                        <td class="tableData" x-text="plan.sms_price"></td>
+                        <td class="tableData" x-text="plan.call_price"></td>
+                        <td class="tableData" x-text="plan.data_price"></td>
+                        <td class="tableData">
+                            <button class="" @click="selectedPlanName = plan.plan_name" x-on:click="">
+                                <ion-icon style="font-size: 15px; font-weight: bolder;"
+                                    name="create-outline"></ion-icon>
+                            </button>
 
-            <tr>
-                <td colspan="6"> <button class="addIcon"> <ion-icon name="add-circle-outline" @click="add = true"></ion-icon> </button></td>
-            </tr>
+
+
+                            <button @click="selectedPlanName = plan.plan_name" x-on:click="">
+                                <ion-icon style="font-size: 15px; font-weight: bolder;" name="trash-outline"></ion-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </template>
+                <tr style="text-align: center;">
+                    <td colspan="6"> <button class="addIcon"><ion-icon name="add-circle-outline"
+                                @click="addPlan()"></ion-icon> </button></td>
+                </tr>
+                <tr style="text-align: center;">
+                    <td colspan="6"> 
+                        <button @click="loadSearchedPlan()">
+                            <ion-icon name="search-circle-outline"></ion-icon>
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
         </table>
 
     </div>
@@ -74,7 +93,26 @@
 
     </div>
 
-    <div class="">
+    <div class="phoneBill">
+        <h2>Calculate costs</h2>
+
+        <div>
+            <label for="planName">Enter price plan name here:</label>
+            <input class="phoneBillInputs" id="planName" type="text">
+        </div>
+
+        <div>
+            <label for="usage">Enter usage here</label>
+            <input id="usage" class="phoneBillInputs" type="text">
+        </div>
+
+        <div>
+            <label for="airtime">Enter airtime here</label>
+            <input class="phoneBillInputs" type="number" id="airtime">
+        </div>
+
+        <Button @click="calculateAirtime() && calculateTotalBill() ">Calculate</Button>
+
 
     </div>
 

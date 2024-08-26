@@ -15,18 +15,18 @@ Content-Type: application/json
 
 
 ### Retrieve one price plans
-GET http://localhost:5565/totalBill/price_plan/Retrieve/one/price_plan/Price plan 7
+GET http://localhost:5565/totalBill/price_plan/Retrieve/one/price_plan/Price plan 1
 
 
 ### Update a price plan
-PUT http://localhost:5565/totalBill/price_plan/Update_plan/Price plan 7
+PUT http://localhost:5565/totalBill/price_plan/Update_plan/1
 Content-Type: application/json
 
      {
-        "new_plan_name": "Price plan 7",
-        "sms_price": 3.99,
-        "call_price": 4.99,
-        "data_price": 5.99
+        "new_plan_name": "Price plan 1",
+        "sms_price": 1.80,
+        "call_price": 2.99,
+        "data_price": 0.99
     }
 
 ### Delete a price plan
@@ -49,3 +49,4 @@ Content-Type: application/json
   "usage": "call,sms,data",
   "airtime": 10
 }
+
