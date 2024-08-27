@@ -8,6 +8,7 @@ document.addEventListener('alpine:init', () => {
             AddedPlan: [],
             planName: '',
             smsPrice:'',
+            callPrice: '',
             dataPrice: '',
             usage: '',
             airtime: '',
@@ -16,6 +17,11 @@ document.addEventListener('alpine:init', () => {
             searched: false,
             searchPopUp: false,
             calculated: false,
+            updatePopUp:false,
+            add: false,
+            edit: false,
+            look: false,
+            remove: false,
 
 
 

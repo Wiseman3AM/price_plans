@@ -20,10 +20,10 @@
 
 
 
-    <h1>Phone bill calculator using SQLite</h1>
+    <h1 class="headings">Phone bill calculator using SQLite</h1>
 
+    <h2 class="headings">Codex price plans</h2>
     <div class="allPlans">
-        <h2 class="subHeadings">Codex price plans</h2>
         <table class="pricePlanTable">
 
             <thead>
@@ -42,32 +42,50 @@
 
                     <tr class="tableRow">
                         <td class="tableData" x-text="plan.plan_name"></td>
-                        <td class="tableData" x-text="plan.sms_price"></td>
-                        <td class="tableData" x-text="plan.call_price"></td>
-                        <td class="tableData" x-text="plan.data_price"></td>
+                        <td class="tableData" x-text="'R ' + plan.sms_price.toFixed(2)"></td>
+                        <td class="tableData" x-text="'R ' + plan.call_price.toFixed(2)"></td>
+                        <td class="tableData" x-text="'R ' + plan.data_price.toFixed(2)"></td>
                         <td class="tableData">
-                            <button class="" @click="selectedPlanName = plan.plan_name" x-on:click="">
+
+                            <button class="editButton" @click="selectedPlanName = plan.plan_name;
+                            planName = plan.plan_name;
+                            smsPrice = plan.sms_price;
+                            callPrice = plan.call_price;
+                            dataPrice = plan.data_price" 
+                            x-on:click="updatePopUp = true; edit= true">
                                 <ion-icon style="font-size: 15px; font-weight: bolder;"
                                     name="create-outline"></ion-icon>
                             </button>
 
 
 
-                            <button @click="selectedPlanName = plan.plan_name" x-on:click="">
+                            <button class="removeButton" @click="selectedPlanName = plan.plan_name"
+                                x-on:click="searchPopUp = true; remove = true">
                                 <ion-icon style="font-size: 15px; font-weight: bolder;" name="trash-outline"></ion-icon>
                             </button>
                         </td>
                     </tr>
                 </template>
+
                 <tr style="text-align: center;">
-                    <td colspan="6"> <button class="addIcon"><ion-icon name="add-circle-outline"
-                                @click="addPlan()"></ion-icon> </button></td>
-                </tr>
-                <tr x-show="!searchPopUp || !searched" style="text-align: center;">
                     <td colspan="6">
-                        <button @click="searchPopUp = true">
-                            <ion-icon name="search-circle-outline"></ion-icon>
-                        </button>
+                            <ion-icon
+                            class="addIcon" 
+                            @click="updatePopUp = true; add= true;
+                            planName = '';
+                            smsPrice = '';
+                            callPrice = '';
+                            dataPrice = ''" 
+                            name="add-circle-outline"></ion-icon>
+                    </td>
+                </tr>
+
+                <tr x-show="!searched || !searchPopUp " style="text-align: center;">
+                    <td colspan="6">
+
+                        <ion-icon class="addIcon" name="search-circle-outline"
+                            @click="searchPopUp = true; look = true"></ion-icon>
+
 
                     </td>
 
@@ -82,9 +100,7 @@
                     <td class="tableData" x-text="selectedPriceData.sms_price"></td>
                     <td class="tableData" x-text="selectedPriceData.call_price"></td>
                     <td class="tableData" x-text="selectedPriceData.data_price"></td>
-                    <td class="tableData">  <button @click="searchPopUp = true">
-                        <ion-icon name="search-circle-outline"></ion-icon>
-                    </button> </td>
+                    <td class="tableData"> <button class="removeButton" @click="searched = false">close</button> </td>
                 </tr>
 
             </tbody>
@@ -93,42 +109,49 @@
     </div>
 
 
+    <h2 class="headings">Calculate costs</h2>
+
+
     <div class="phoneBill">
-        <h2>Calculate costs</h2>
 
-        <div>
-            <label for="planName">Enter price plan name here:</label>
-            <input class="phoneBillInputs" id="planName" x-model="selectedPlanName" type="text" :disabled="calculated">
+        <div class="calculator">
+            <div>
+                <input class="phoneBillInputs" placeholder="Plan name" id="planName" x-model="selectedPlanName"
+                    type="text" :disabled="calculated">
+            </div>
+
+            <div>
+                <input id="usage" placeholder="Usage" class="phoneBillInputs" x-model="usage" type="text"
+                    :disabled="calculated">
+            </div>
+
+            <div>
+
+                <input class="phoneBillInputs" placeholder="Airtime" type="number" min="0" x-model="airtime"
+                    id="airtime" :disabled="calculated">
+            </div>
+
+            <Button @click="calculateAirtime(); calculateTotalBill(); calculated = true "
+                :disabled="calculated">Calculate</Button>
+
+          <div class="message">
+                <div x-show="calculated" x-text="'Total cost: ' + totalBill.totalBill">
+
+            </div>
+
+            <div x-show="calculated" x-text="'Remaining airtime: ' + remainingAirtime.totalBill">
+
+            </div>
+</div>
+            <Button class="button" x-show="calculated" @click="calculated = false ">Calculate again</Button>
+
         </div>
-
-        <div>
-            <label for="usage">Enter usage here</label>
-            <input id="usage" class="phoneBillInputs" x-model="usage" type="text" :disabled="calculated">
-        </div>
-
-        <div>
-            <label for="airtime">Enter airtime here</label>
-            <input class="phoneBillInputs" type="number" x-model="airtime" id="airtime" :disabled="calculated">
-        </div>
-
-        <Button @click="calculateAirtime(); calculateTotalBill(); calculated = true " :disabled="calculated">Calculate</Button>
-
-        <div x-show="calculated" x-text="'Total cost: ' + totalBill.totalBill">
-
-        </div>
-
-        <div x-show="calculated" x-text="'Remaining airtime: ' + remainingAirtime.totalBill">
-
-        </div>
-
-        <Button x-show="calculated" @click="calculated = false ">Calculate again</Button>
-
     </div>
 
 
 
     <div class="searchPopUp" x-show="searchPopUp">
-        <h2 class="subHeadings">Search for a price plan </h2>
+        <h2>Search for a price plan </h2>
 
         <div style="text-align: center;">
             <input class="searchInputs" id="searchPlanInput" type="text" x-model="selectedPlanName"
@@ -136,17 +159,44 @@
         </div>
 
         <div style="text-align: center;">
-            <button class="searchButton" @click="loadSearchedPlan(); searchPopUp = false; searched = true">Search</button>
+            <button class="searchButton" @click="loadSearchedPlan(); searchPopUp = false; searched = true; look = false"
+                x-show="look">Search</button>
+
+            <button class="searchButton"
+                @click="deleteSelectedPlan(); searchPopUp = false; searched = true; remove = false"
+                x-show="remove">Remove</button>
         </div>
 
-        <button class="searchButton" @click="searchPopUp = false">Cancel</button>
+        <button class="searchButton" @click="searchPopUp = false; look = false; remove = false">Cancel</button>
 
     </div>
 
 
 
-    <div class="popUp">
-        <label for="searchInput"></label>
+    <div class="updatepPopUp" x-show="updatePopUp">
+        <h2 x-show="edit">Edit a price plan </h2>
+        <h2 x-show="add">Add a price plan </h2>
+        
+        <div>
+            <input id="updateInput" type="text" x-model="planName" placeholder="Plan name">
+        </div>
+
+        <div>
+            <input id="smsInput" type="text" x-model="smsPrice" min="0" placeholder="SMS price">
+        </div>
+
+        <div>
+            <input id="callInput" type="text" x-model="callPrice" min="0" placeholder="Call price">
+        </div>
+
+        <div>
+            <input id="dataInput" type="text" x-model="dataPrice" min="0" placeholder="Data price">
+        </div>
+
+        <button x-show="add" class="buttons" @click="addPlan()">Add</button>
+        <button x-show="edit" class="buttons" @click="loadEditedPlan ()">Edit</button>
+        <button class="buttons" @click="updatePopUp = false; add = false; edit = false">Cancel</button>
+
 
     </div>
 
