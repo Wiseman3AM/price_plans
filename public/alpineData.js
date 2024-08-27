@@ -27,7 +27,7 @@ document.addEventListener('alpine:init', () => {
 
             async fetchAddPricePlan (){
                 try{
-                   const response = await axios.post(`http://localhost:5565/totalBill/price_plan/Add_price_plan`, 
+                   const response = await axios.post(`/totalBill/price_plan/Add_price_plan`, 
                     {
                         plan_name: this.planName,
                         sms_price: this.smsPrice,
@@ -49,7 +49,7 @@ document.addEventListener('alpine:init', () => {
 
             async fetchPricePlans() {
                 try {
-                    const response = await axios.get(`http://localhost:5565/totalBill/price_plan/Retrieve/all/price_plans`);
+                    const response = await axios.get(`/totalBill/price_plan/Retrieve/all/price_plans`);
                     return response.data;
 
                 } catch (error) {
@@ -67,7 +67,7 @@ document.addEventListener('alpine:init', () => {
 
             async fetchOnePricePlan(){
                 try{
-                    const response = await axios.get(`http://localhost:5565/totalBill/price_plan/Retrieve/one/price_plan/${this.selectedPlanName}`);
+                    const response = await axios.get(`/totalBill/price_plan/Retrieve/one/price_plan/${this.selectedPlanName}`);
                     return response.data;
 
                 } catch (error){
@@ -85,7 +85,7 @@ document.addEventListener('alpine:init', () => {
 
             async fetchEditPricePlan (){
                 try {
-                    const response = await axios.put(`http://localhost:5565/totalBill/price_plan/Update_plan/${this.selectedPlanName}`,
+                    const response = await axios.put(`/totalBill/price_plan/Update_plan/${this.selectedPlanName}`,
                         {
                             new_plan_name: this.planName,
                             sms_price: this.smsPrice,
@@ -111,7 +111,7 @@ document.addEventListener('alpine:init', () => {
             async fetchDeletePricePlan (){
                 try{
 
-                    const response = await axios.delete(`http://localhost:5565/totalBill/price_plan/Delete_plan/${this.selectedPlanName}`);
+                    const response = await axios.delete(`/totalBill/price_plan/Delete_plan/${this.selectedPlanName}`);
                     return response.data;
 
                 } catch (error){
@@ -127,7 +127,7 @@ document.addEventListener('alpine:init', () => {
 
             async fetchTotalBill(){
                 try{
-                    const response = await axios.post(`http://localhost:5565/totalBill/price_plan/Calculate_Total_price/${this.selectedPlanName}`,
+                    const response = await axios.post(`/totalBill/price_plan/Calculate_Total_price/${this.selectedPlanName}`,
                         {usage: this.usage}
                     );
                     return response.data
@@ -146,7 +146,7 @@ document.addEventListener('alpine:init', () => {
 
     async fetchEnoughAirtime(){
                 try{
-                    const response = await axios.post(` http://localhost:5565/totalBill/price_plan/Calculate_enough_price/${this.selectedPlanName}`,
+                    const response = await axios.post(` /totalBill/price_plan/Calculate_enough_price/${this.selectedPlanName}`,
                         {usage: this.usage,
                         airtime: this.airtime
                         }
