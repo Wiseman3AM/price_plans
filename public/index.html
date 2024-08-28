@@ -60,7 +60,7 @@
 
 
                             <button class="removeButton" @click="selectedPlanName = plan.plan_name"
-                                x-on:click="searchPopUp = true; remove = true">
+                                x-on:click="searchPopUp = true; remove = true; searched = false">
                                 <ion-icon style="font-size: 15px; font-weight: bolder;" name="trash-outline"></ion-icon>
                             </button>
                         </td>
@@ -95,6 +95,7 @@
                 <tr x-show="searched" style="text-align: center;">
                     <td colspan="6" style="background-color: rgb(23, 23, 23); color: aliceblue;">SELECTED PLAN</td>
                 </tr>
+
                 <tr x-show="searched">
                     <td class="tableData" x-text="selectedPriceData.plan_name"></td>
                     <td class="tableData" x-text="selectedPriceData.sms_price"></td>
@@ -193,8 +194,8 @@
             <input id="dataInput" type="text" x-model="dataPrice" min="0" placeholder="Data price">
         </div>
 
-        <button x-show="add" class="buttons" @click="addPlan()">Add</button>
-        <button x-show="edit" class="buttons" @click="loadEditedPlan ()">Edit</button>
+        <button x-show="add" class="buttons" @click="addPlan(); updatePopUp = false; add = false; edit = false">Add</button>
+        <button x-show="edit" class="buttons" @click="loadEditedPlan (); updatePopUp = false; add = false; edit = false">Edit</button>
         <button class="buttons" @click="updatePopUp = false; add = false; edit = false">Cancel</button>
 
 
